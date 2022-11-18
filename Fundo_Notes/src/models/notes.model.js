@@ -21,7 +21,10 @@ const notesSchema = new Schema(
     isTrash: {
       type: Boolean,
       default: false
-    }
+    },
+    UserID: {
+      type: String
+  },
   },
   {
     timestamps: true
