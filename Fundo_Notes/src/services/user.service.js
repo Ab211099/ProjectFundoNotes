@@ -1,4 +1,5 @@
 import User from '../models/user.model';
+import * as utils from '../utils/user.util';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -63,3 +64,16 @@ export const getUser = async (_id) => {
   const data = await User.findById(_id);
   return data;
 };
+//Forgot Password
+export const forgotPassword=async(body)=>{
+  const data=await User.findOne({EmailId:body.EmailId});
+  if(data!==null){
+    var token=jwt.sign(
+      {id:data._id,EmailId:data.EmailId},process.env.SCERET_KEY
+    );
+    utils.sendmail(body.EmailId);
+    return token;
+  }else{
+    throw new Error('invalid Emailid');
+  }
+}

@@ -20,7 +20,7 @@ import jwt from 'jsonwebtoken';
     bearerToken = bearerToken.split(' ')[1];
 
     const user = await jwt.verify(bearerToken, process.env.SCERET_KEY);
-    req.body.UserID = user.EmailId;
+    req.body.EmailId = user.EmailId;
     next();
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({

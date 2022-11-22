@@ -1,4 +1,5 @@
 import express from 'express';
+import { userAuth } from '../middlewares/auth.middleware';
 import * as userController from '../controllers/user.controller';
 import { newUserValidator } from '../validators/user.validator';
 
@@ -23,5 +24,10 @@ router.put('/:_id', userController.updateUser);
 
 //route to delete a single user by their user id
 router.delete('/:_id', userController.deleteUser);
+
+//route to forgot password
+router.post('/forgotPWD',userController.forgotPassword);
+
+
 
 export default router;

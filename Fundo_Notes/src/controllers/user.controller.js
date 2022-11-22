@@ -118,3 +118,48 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+/**
+controller to authorise the user for forgotten password
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ * */
+
+export const forgotPassword=async(req,res)=>{
+  try{
+    const data=await UserService.forgotPassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code:HttpStatus.CREATED,
+      data:data,
+      message:'forgot password successfull and now proceed further'
+    });
+  }catch(error){
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code:HttpStatus.BAD_REQUEST,
+      message:`${error}`
+    });
+  }
+};
+
+/**
+controller to authorise the user for forgotten password
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ * */
+ export const resetPassword=async(req,res)=>{
+   try{
+      const data=await UserService.resetPassword(req.body);
+      console.log(data)
+      res.status(HttpStatus.CREATED).json({
+        code:HttpStatus.CREATED,
+        data:data,
+        message:'Password reset is successfully'
+      });
+    }catch(error){
+      res.status(HttpStatus.BAD_REQUEST).json({
+        code:HttpStatus.BAD_REQUEST,
+        message:`${error}`
+      });
+    }
+  }
