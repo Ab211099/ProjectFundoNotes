@@ -2,6 +2,16 @@ import User from '../models/user.model';
 import * as utils from '../utils/user.util';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+//get all users
+export const getAllUsers = async () => {
+  const data = await User.find();
+  return data;
+};
+
 
 //login user
 export const loginuser = async (body) => {
@@ -31,39 +41,6 @@ export const RegisterNewUser = async (body) => {
   return data;
 };
 
-
-
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
-  return data;
-};
-
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
-    }
-  );
-  return data;
-};
-
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
-
-//get single user
-export const getUser = async (_id) => {
-  const data = await User.findById(_id);
-  return data;
-};
 //Forgot Password
 export const forgotPassword=async(body)=>{
   const data=await User.findOne({EmailId:body.EmailId});
@@ -77,3 +54,18 @@ export const forgotPassword=async(body)=>{
     throw new Error('invalid Emailid');
   }
 }
+
+//reset the password
+export const resetPassword=async(body)=>{
+  const saltRounds=10;
+  const hashPassword=await bcrypt.hash(body.password,saltRounds);
+  body.password=hashPassword;
+  const data=await User.findOneAndUpdate(
+    {EmailId:body.Emailid},
+    body,
+    {
+      new:true
+    }
+  );
+  return data;
+};
