@@ -96,7 +96,7 @@ describe('UserRegistration--Invalid Password', () => {
     "EmailId":"bhavekarabhi@gmail.com",
     "password":"@bh"
   }
-  it('details of users should be saved in database', (done) => {
+  it('Given invalid Password should throw corresponding error', (done) => {
     request(app)
       .post('/api/v1/users/Register')
       .send(inputBody)
