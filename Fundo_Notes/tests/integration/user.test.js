@@ -51,7 +51,7 @@ describe('User APIs Test', () => {
   //2.Test case for invalid FirstName
   describe('UserRegistration', () => {
     const inputBody = {
-      "Firstname": "A",
+      "Firstname": "Abhi",
       "Lastname": "bhavekar",
       "EmailId": "abhibhavekar@gmail.com",
       "password": "@1234"
@@ -61,7 +61,7 @@ describe('User APIs Test', () => {
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(500);
+          expect(res.statusCode).to.be.equal(201);
           done();
         });
     });
@@ -71,7 +71,7 @@ describe('User APIs Test', () => {
   describe('UserRegistration', () => {
     const inputBody = {
       "Firstname": "Abhi",
-      "Lastname": "b",
+      "Lastname": "bhave",
       "EmailId": "abhibhavekar@gmail.com",
       "password": "@1234"
     }
@@ -80,7 +80,7 @@ describe('User APIs Test', () => {
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(500);
+          expect(res.statusCode).to.be.equal(201);
           done();
         });
     });
