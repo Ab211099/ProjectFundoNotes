@@ -28,14 +28,14 @@ describe('User APIs Test', () => {
 
   //1.Test case for user registration
 
-  describe('Userregistration', () => {
+  describe('UserRegistration', () => {
     const inputBody = {
       "Firstname": "Abhishek",
       "Lastname": "Bhavekar",
-      "EmailId": "abhibhvaekar@gmail.com",
-      "password": "@1234566"
+      "EmailId": "bhavekarabhi@gmail.com",
+      "password": "@bhi007b"
     }
-    it('Given valid details shoud be saved in database', (done) => {
+    it('Registration details shoud be saved in database', (done) => {
       request(app)
         .post('/api/v1/users/Register')
         .send(inputBody)
@@ -49,9 +49,9 @@ describe('User APIs Test', () => {
 
 
   //2.Test case for invalid FirstName
-  describe('UserRegistration', () => {
+  describe('UserRegistration--invalid Firstname', () => {
     const inputBody = {
-      "Firstname": "Abhi",
+      "Firstname": "A",
       "Lastname": "bhavekar",
       "EmailId": "abhibhavekar@gmail.com",
       "password": "@1234"
@@ -61,28 +61,118 @@ describe('User APIs Test', () => {
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(201);
+          expect(res.statusCode).to.be.equal(500);
           done();
         });
     });
   });
 
   //3.Test case for invalid LasttName
-  describe('UserRegistration', () => {
+  describe('UserRegistration--invalid Last name', () => {
     const inputBody = {
       "Firstname": "Abhi",
-      "Lastname": "bhave",
+      "Lastname": "b",
       "EmailId": "abhibhavekar@gmail.com",
-      "password": "@1234"
+      "password": "@bhi007b"
     }
     it('Given invalid Last Name should throw corresponding error', (done) => {
       request(app)
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(201);
+          expect(res.statusCode).to.be.equal(500);
           done();
         });
     });
   });
 })
+
+//4.Test case for Invalid password
+
+describe('UserRegistration--Invalid Password', () => {
+  const inputBody={
+    "Firstname":"Abhishek",
+   "Lastname":"Bhavekar",
+    "EmailId":"bhavekarabhi@gmail.com",
+    "password":"@bh"
+  }
+  it('details of users should be saved in database', (done) => {
+    request(app)
+      .post('/api/v1/users/Register')
+      .send(inputBody)
+      .end((_err, res) => {
+        expect(res.statusCode).to.be.equal(500);
+        done();
+      });
+  });
+});
+
+//5.Test case for valid user login
+describe('UserLogin', () => {
+  const inputBody={
+    "EmailId":"bhavekarabhi@gmail.com",
+      "password":"@bhi007b"
+  }
+  it('user login details should be saved in database', (done) => {
+    request(app)
+      .post('/api/v1/users/logins')
+      .send(inputBody)
+      .end((err, res) => {
+      expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+   });
+});
+//6.Test case for invalid Email
+
+describe('UserLogin--invalid EmailId', () => {
+  const inputBody={
+    "EmailId":"bhavekarabh",
+    "password":"@bhi007b"
+  }
+  it('Given invalid Emailid should throw corresponding error', (done) => {
+    request(app)
+      .post('/api/v1/users/logins')
+      .send(inputBody)
+      .end((err, res) => {
+      expect(res.statusCode).to.be.equal(500);
+      done();
+    });
+   });
+});
+//7.Test case for invalid password
+
+describe('UserLogin--invalid password', () => {
+  const inputBody={
+    "EmailId": "bhavekarabhi@gmail.com",
+    "password":"@bh"
+  }
+  it('Given invalid user password details should throw corresponding error', (done) => {
+    request(app)
+      .post('/api/v1/users/logins')
+      .send(inputBody)
+      .end((err, res) => {
+      expect(res.statusCode).to.be.equal(500);
+      done();
+    });
+   });
+});
+
+//8.Test case for both invalid Password and Invalid EmailID
+
+describe('UserLogin-Invalid password&email', () => {
+  const inputBody={
+    "EmailId": "bhavek@a",
+    "password":"@bh"
+  }
+  it('Given invalid user Password and EmailId details should throw corresponding error', (done) => {
+    request(app)
+      .post('/api/v1/users/logins')
+      .send(inputBody)
+      .end((err, res) => {
+      expect(res.statusCode).to.be.equal(500);
+      done();
+    });
+   });
+});
+
