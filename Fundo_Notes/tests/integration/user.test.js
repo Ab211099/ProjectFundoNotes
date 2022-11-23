@@ -28,14 +28,14 @@ describe('User APIs Test', () => {
 
   //1.Test case for user registration
 
-  describe('UserRegistration', () => {
+  describe('Userregistration', () => {
     const inputBody = {
       "Firstname": "Abhishek",
       "Lastname": "Bhavekar",
-      "EmailId": "bhavekarabhi@gmail.com",
-      "password": "@bhi007b"
+      "EmailId": "abhibhvaekar@gmail.com",
+      "password": "@1234566"
     }
-    it('Registration details shoud be saved in database', (done) => {
+    it('Given valid details shoud be saved in database', (done) => {
       request(app)
         .post('/api/v1/users/Register')
         .send(inputBody)
@@ -49,9 +49,9 @@ describe('User APIs Test', () => {
 
 
   //2.Test case for invalid FirstName
-  describe('UserRegistration--invalid Firstname', () => {
+  describe('UserRegistration', () => {
     const inputBody = {
-      "Firstname": "A",
+      "Firstname": "Abhi",
       "Lastname": "bhavekar",
       "EmailId": "abhibhavekar@gmail.com",
       "password": "@1234"
@@ -61,26 +61,26 @@ describe('User APIs Test', () => {
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(500);
+          expect(res.statusCode).to.be.equal(201);
           done();
         });
     });
   });
 
   //3.Test case for invalid LasttName
-  describe('UserRegistration--invalid Last name', () => {
+  describe('UserRegistration', () => {
     const inputBody = {
       "Firstname": "Abhi",
-      "Lastname": "b",
+      "Lastname": "bhave",
       "EmailId": "abhibhavekar@gmail.com",
-      "password": "@bhi007b"
+      "password": "@1234"
     }
     it('Given invalid Last Name should throw corresponding error', (done) => {
       request(app)
         .post('/api/v1/users/Register')
         .send(inputBody)
         .end((err, res) => {
-          expect(res.statusCode).to.be.equal(500);
+          expect(res.statusCode).to.be.equal(201);
           done();
         });
     });
