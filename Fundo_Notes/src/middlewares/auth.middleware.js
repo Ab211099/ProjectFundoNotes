@@ -11,7 +11,7 @@ dotenv.config();
  * @param {Object} res
  * @param {Function} next
  */
- export const userAuth = async (req, res, next) => {
+export const userAuth = async (req, res, next) => {
   try {
     let bearerToken = req.header('Authorization');
     if (!bearerToken)
@@ -21,19 +21,22 @@ dotenv.config();
       };
     bearerToken = bearerToken.split(' ')[1];
 
-    const user = await jwt.verify(bearerToken, process.env.SCERET_KEY);
-    req.body.EmailId = user.EmailId;
+    const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
+    req.body.UserID = user.EmailId;
     next();
   } catch (error) {
-    res.status(HttpStatus.BAD_REQUEST).json({
-      code: HttpStatus.BAD_REQUEST,
+    res.status(HttpStatus.UNAUTHORIZED).json({
+      code: HttpStatus.UNAUTHORIZED,
       message: `${error}`
     });
   }
 };
+
+
 export const userAuthentication= async (req, res, next) => {
   try {
     let bearerToken = req.header('Authorization');
+    console.log(bearerToken);
     if (!bearerToken)
       throw {
         code: HttpStatus.BAD_REQUEST,
@@ -41,11 +44,8 @@ export const userAuthentication= async (req, res, next) => {
       };
     bearerToken = bearerToken.split(' ')[1];
     
-    const user = await jwt.verify(bearerToken, process.env.SCERET_KEY);
-    console.log('user========>',user)
+    const user = await jwt.verify(bearerToken, process.env.SECRET_KEY);
     req.body.EmailId=user.EmailId;
-    
-    
     next();
   } catch (error) {
     res.status(HttpStatus.UNAUTHORIZED).json({

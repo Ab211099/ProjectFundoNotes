@@ -39,6 +39,7 @@ export const loginUser = async (req, res, next) => {
       data: data,
       message: 'User login successfully'
     });
+    
   } catch (error) {
     next(error);
   }

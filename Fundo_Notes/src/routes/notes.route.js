@@ -1,17 +1,19 @@
 import express from 'express';
 import * as notesController from '../controllers/notes.controller';
 import { userAuth } from '../middlewares/auth.middleware';
+import { NewNotesValidator } from '../validators/user.validator';
+
 
 const router = express.Router();
 
 //route to create a note
-router.post('', userAuth, notesController.createNote);
+router.post('', NewNotesValidator,userAuth, notesController.createNote);
 
 //route to get all notes
 router.get('', userAuth, notesController.getAllNotes);
 
 //router to get a note by id
-router.get('/:_id', userAuth, notesController.getNote);
+router.get('/:_id', userAuth, notesController.GetNote);
 
 //route to update a note
 router.put('/:_id', userAuth, notesController.updateNote);

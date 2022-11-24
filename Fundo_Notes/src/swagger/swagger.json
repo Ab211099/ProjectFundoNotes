@@ -1,0 +1,114 @@
+{
+    "swagger": "2.0",
+    "info": {
+    "version": "v1",
+    "title": "Fundoo Notes",
+    "description": "Fundoo Notes CLI"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1/",
+    "schemas": [
+    "http" 
+    ],
+    "consumes": [
+    "application/json"
+    ],
+    "produces": [
+    "application/json"
+    ],
+    "paths": {
+        "/users/Register": {
+            "post": {
+               "tags": [
+                  "User"
+                ],
+                 "description": "User registration",
+                "parameters": [
+                   {
+                        "name": "Create User",
+                        "in": "body",
+                        "description": "User",
+                        "schema": {
+                         "$ref": "#/definitions/User"
+                        }
+                   }
+                ],
+               "produces": [
+                   "application/json"
+                ],
+               "responses": {
+                   "201": {
+                       "description": "User Created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+
+            
+        },
+        "/users/logins": {
+            "post": {
+               "tags": [
+                  "User"
+                ],
+                 "description": "User login",
+                "parameters": [
+                   {
+                        "name": "User  login ",
+                        "in": "body",
+                        "description": "logins",
+                        "schema": {
+                         "$ref": "#/definitions/logins"
+                        }
+                   }
+                ],
+               "produces": [
+                   "application/json"
+                ],
+               "responses": {
+                   "201": {
+                       "description": "User Created"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+
+            
+        }
+    },
+   "definitions" : {
+         "User": {
+                "type": "object",
+                "properties": {
+                "Firstname": {
+                "type": "string"
+            },
+                "Lastname": {
+                "type": "string"
+            },
+                "EmailId": {
+                "type": "string"
+            },
+                "password": {
+                "type": "string"
+            }
+            
+        }
+    },
+    "logins": {
+        "type": "object",
+        "properties": {
+        "EmailId": {
+        "type": "string"
+    },
+        "password": {
+        "type": "string"
+    }
+    }
+}
+   }
+}
