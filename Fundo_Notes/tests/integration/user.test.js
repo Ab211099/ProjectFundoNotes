@@ -109,7 +109,7 @@ describe('Uservar token; APIs Test', () => {
   });
 
   //5.Test case for valid user login
-  
+
   describe('UserLogin', () => {
     const inputBody = {
       "EmailId": "abhibhvaekar@gmail.com",
@@ -121,7 +121,7 @@ describe('Uservar token; APIs Test', () => {
         .send(inputBody)
         .end((err, res) => {
           token = res.body.data;
-          console.log("Login token===================>>>>>>",res.body.data);
+          console.log("Login token===================>>>>>>", res.body.data);
           expect(res.statusCode).to.be.equal(200);
           done();
         });
@@ -182,16 +182,16 @@ describe('Uservar token; APIs Test', () => {
 
   //9. Test case to create a new note
 
- 
+
   describe('Create Note', () => {
     const inputBody = {
       "title": "note",
       "description": "hello",
     }
-    console.log("Token error===================>>>>>>",token);
+    console.log("Token error===================>>>>>>", token);
     it('note created sucessfully', (done) => {
       request(app)
-      .post('/api/v1/notes')
+        .post('/api/v1/notes')
         .set('authorization', `Bearer ${token}`)
         .send(inputBody)
         .end((err, res) => {
@@ -204,91 +204,118 @@ describe('Uservar token; APIs Test', () => {
 
 
 
-  // //10. Test case for without giving title value in notes
+  //10. Test case for without giving title value in notes
 
-  // describe('creating new note', () => {
-  //   const inputBody = {
-  //     "title": "",
-  //     "description": "hello"
-  //   }
-  //   it('title should be required', (done) => {
-  //     request(app)
-  //       .post('/api/v1/notes')
-  //       .set('authorization', `Bearer ${token}`)
-  //       .send(inputBody)
-  //       .end((err, res) => {
-  //         expect(res.statusCode).to.be.equal(500);
-  //         done();
-  //       });
-  //   });
+  describe('creating new note', () => {
+    const inputBody = {
+      "title": "",
+      "description": "hello"
+    }
+    it('title should be required', (done) => {
+      request(app)
+        .post('/api/v1/notes')
+        .set('authorization', `Bearer ${token}`)
+        .send(inputBody)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(500);
+          done();
+        });
+    });
 
-  // });
-
-
-  // //11:Test case for invalid Description
-  // describe('creating new note', () => {
-  //   const inputBody = {
-  //     "title": "notes"
-  //   }
-  //   it('description should be required', (done) => {
-  //     request(app)
-  //       .post('/api/v1/notes')
-  //       .set('authorization', `Bearer ${token}`)
-  //       .send(inputBody)
-  //       .end((err, res) => {
-  //         expect(res.statusCode).to.be.equal(500);
-  //         done();
-  //       });
-  //   });
-  // });
-
-  // //12. Test case for getting all Notes
-  // describe('get all the notes of the user', () => {
-  //   it('notes fetched successfully', (done) => {
-  //     request(app)
-  //       .get('/api/v1/notes')
-  //       .set('authorization', `Bearer ${token}`)
-  //       .end((err, res) => {
-  //         console.log(res.body);
-  //         expect(res.statusCode).to.be.equal(200);
-  //         done();
-  //       });
-  //   });
-  // });
+  });
 
 
-  // //13.Update a note by id 
-  // describe('updating the note', () => {
-  //   const inputBody = {
-  //     "color": "green"
-  //   }
-  //   it('note updated successfully', (done) => {
-  //     request(app)
-  //       .put(`/api/v1/notes/${id}`)
-  //       .set('authorization', `Bearer ${token}`)
-  //       .send(inputBody)
-  //       .end((err, res) => {
-  //         console.log("id update=============================>", id);
-  //         expect(res.statusCode).to.be.equal(202);
-  //         done();
-  //       });
-  //   });
-  // });
+  //11:Test case for invalid Description
+  describe('creating new note', () => {
+    const inputBody = {
+      "title": "notes"
+    }
+    it('description should be required', (done) => {
+      request(app)
+        .post('/api/v1/notes')
+        .set('authorization', `Bearer ${token}`)
+        .send(inputBody)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(500);
+          done();
+        });
+    });
+  });
 
-  // //14.Delete a note by id test case
-  // describe('Deleted a note by id', () => {
-  //   it('Given note details should be deleted from database using id', (done) => {
-  //     request(app)
-  //       .delete(`/api/v1/notes/${id}`)
-  //       .set('authorization', `Bearer ${token}`)
-  //       .end((err, res) => {
-  //         console.log(res.body);
-  //         expect(res.statusCode).to.be.equal(200);
-  //         done();
-  //       });
-  //   });
+  //12. Test case for getting all Notes
+  describe('get all the notes of the user', () => {
+    it('notes fetched successfully', (done) => {
+      request(app)
+        .get('/api/v1/notes')
+        .set('authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res.statusCode).to.be.equal(200);
+          done();
+        });
+    });
+  });
 
-  // });
 
+  //13.Update a note by id 
+  describe('updating the note', () => {
+    const inputBody = {
+      "color": "green"
+    }
+    it('note updated successfully', (done) => {
+      request(app)
+        .put(`/api/v1/notes/${id}`)
+        .set('authorization', `Bearer ${token}`)
+        .send(inputBody)
+        .end((err, res) => {
+          console.log("id update=============================>", id);
+          expect(res.statusCode).to.be.equal(202);
+          done();
+        });
+    });
+  });
+
+
+  //14.archive a note by id test case
+  describe('Archive a note by id', () => {
+    it('Given note details should archive using id from database', (done) => {
+      request(app)
+        .put(`/api/v1/notes/${id}/archive`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(202);
+          done();
+        });
+    });
+  });
+
+
+  //15.trash a note by id test case
+  describe('trash a note by id', () => {
+    it('Given note details should archive using id from database', (done) => {
+      request(app)
+        .put(`/api/v1/notes/${id}/trash`)
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res.statusCode).to.be.equal(202);
+          done();
+        });
+    });
+  });
+
+  //16.Delete a note by id test case
+  describe('Deleted a note by id', () => {
+    it('Given note details should be deleted from database using id', (done) => {
+      request(app)
+        .delete(`/api/v1/notes/${id}`)
+        .set('authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res.statusCode).to.be.equal(200);
+          done();
+        });
+    });
+  });
 })
 
