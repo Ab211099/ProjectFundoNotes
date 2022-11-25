@@ -21,7 +21,7 @@ export const loginuser = async (body) => {
     if (result) {
       var token = jwt.sign(
         { EmailId: data.EmailId, _id: data._id },
-        process.env.SCERET_KEY
+        process.env.SECRET_KEY
       );
       return token;
     } else {
@@ -46,7 +46,7 @@ export const forgotPassword=async(body)=>{
   const data=await User.findOne({EmailId:body.EmailId});
   if(data!==null){
     var token=jwt.sign(
-      {id:data._id,EmailId:data.EmailId},process.env.SCERET_KEY
+      {id:data._id,EmailId:data.EmailId},process.env.SECRET_KEY
     );
     utils.sendmail(body.EmailId);
     return token;

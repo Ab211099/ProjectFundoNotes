@@ -35,7 +35,7 @@ export const loginUser = async (req, res, next) => {
   try {
     const data = await UserService.loginuser(req.body);
     res.status(HttpStatus.OK).json({
-      code: HttpStatus.Ok,
+      code: HttpStatus.OK,
       data: data,
       message: 'User login successfully'
     });
