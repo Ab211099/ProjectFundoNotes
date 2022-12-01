@@ -1,5 +1,6 @@
 import User from '../models/user.model';
 import * as utils from '../utils/user.util';
+import * as mq from '../utils/rabbitmq'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -38,6 +39,8 @@ export const RegisterNewUser = async (body) => {
   const hashpassword = await bcrypt.hash(body.password, saltRounds);
   body.password = hashpassword;
   const data = await User.create(body);
+  const dataRabbit=JSON.stringify(data);
+   mq.producer('receive',dataRabbit);
   return data;
 };
 
